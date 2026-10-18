@@ -61,7 +61,11 @@ service cloud.firestore {
           resource.data.userEmail == request.auth.token.email
         ));
       allow update: if isAdmin() || 
-        (request.auth != null && resource.data.userId == request.auth.uid);
+        (request.auth != null && (
+          resource.data.userId == request.auth.uid || 
+          resource.data.userEmail == request.auth.token.email
+        )) ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['paymentStatus', 'paymentId', 'failureReason', 'updatedAt']);
       allow delete: if isAdmin();
     }
     match /waivers/{doc} {

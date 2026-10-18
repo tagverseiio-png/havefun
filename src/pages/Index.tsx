@@ -1,3 +1,4 @@
+import Navbar from '@/components/HavFun/Navbar';
 import Hero from '@/components/HavFun/Hero';
 import About from '@/components/HavFun/About';
 import Attractions from '@/components/HavFun/Attractions';
@@ -12,6 +13,7 @@ import Contact from '@/components/HavFun/Contact';
 const Index = () => {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
+      <Navbar />
 
       <main>
         <section id="home">
