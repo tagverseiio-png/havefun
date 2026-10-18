@@ -55,7 +55,14 @@ service cloud.firestore {
     }
     match /bookings/{doc} {
       allow create: if request.resource.data.keys().hasAll(['date', 'time', 'duration']);
-      allow read, update, delete: if isAdmin();
+      allow read: if isAdmin() || 
+        (request.auth != null && (
+          resource.data.userId == request.auth.uid || 
+          resource.data.userEmail == request.auth.token.email
+        ));
+      allow update: if isAdmin() || 
+        (request.auth != null && resource.data.userId == request.auth.uid);
+      allow delete: if isAdmin();
     }
     match /waivers/{doc} {
       allow create: if request.resource.data.keys().hasAll(['name', 'email', 'participants']);
