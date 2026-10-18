@@ -250,20 +250,40 @@ const BookingAssistant = () => {
         },
         theme: {
           color: '#E11D48'
+        },
+        modal: {
+          ondismiss: function () {
+            setIsSaving(false);
+            if (firestoreDocId) {
+              updateBookingStatus(firestoreDocId, 'FAILED', {
+                failureReason: 'Payment cancelled by user'
+              }).catch(console.error);
+            }
+          }
         }
       };
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on('payment.failed', function (response: any) {
-         console.error('Payment failed:', response.error);
+         console.warn('Payment failed or cancelled:', response.error);
          const reason = response.error?.description || response.error?.reason || 'Payment cancelled or failed';
+         const isUserCancel = 
+           reason.toLowerCase().includes('cancel') || 
+           reason.toLowerCase().includes('closed') ||
+           response.error?.reason === 'payment_cancelled';
+
          if (firestoreDocId) {
            updateBookingStatus(firestoreDocId, 'FAILED', {
-             failureReason: reason
+             failureReason: isUserCancel ? 'Payment cancelled by user' : reason
            }).catch(console.error);
          }
-         toast.error(`Payment failed: ${reason}`);
+
          setIsSaving(false);
+
+         // Only show alert for actual bank/gateway failures, NOT when user cancels
+         if (!isUserCancel) {
+           toast.error(reason || 'Payment was not completed. Please try again.');
+         }
       });
       rzp.open();
     } catch (error: any) {
