@@ -114,15 +114,25 @@ const BookingAssistant = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'createOrder', payload: { amount } })
       });
-      const order = await orderRes.json();
+      
+      let order;
+      try {
+        order = await orderRes.json();
+      } catch (e) {
+        throw new Error(`Server returned status ${orderRes.status}. Please check Vercel logs.`);
+      }
+
+      if (!orderRes.ok || order.error) {
+        throw new Error(order.error || `Failed to create order (${orderRes.status})`);
+      }
 
       if (!order.id) {
-        throw new Error('Failed to create order');
+        throw new Error('Invalid order response from server');
       }
 
       // 2. Open Razorpay Checkout
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_TMC1y806KEycFK', // Key ID
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_TpNGPYfWSxfON0', // Key ID
         amount: order.amount,
         currency: order.currency,
         name: 'HavFun Trampoline Park',
@@ -180,7 +190,8 @@ const BookingAssistant = () => {
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on('payment.failed', function (response: any) {
-         toast.error('Payment failed or cancelled.');
+         console.error('Payment failed:', response.error);
+         toast.error(`Payment failed: ${response.error?.description || 'Transaction cancelled.'}`);
          setIsSaving(false);
       });
       rzp.open();

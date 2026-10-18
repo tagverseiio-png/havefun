@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Loader2, LogOut, ShieldAlert, ShieldCheck, Calendar as CalendarIcon, ChevronLeft, ChevronRight, XCircle } from 'lucide-react';
+import { Loader2, LogOut, ShieldAlert, ShieldCheck, Calendar as CalendarIcon, ChevronLeft, ChevronRight, XCircle, Edit, Trash2, CheckCircle } from 'lucide-react';
 import { auth } from '@/lib/firebase';
 import { isAdminEmail } from '@/lib/admin';
 import {
@@ -9,6 +9,8 @@ import {
   listContactMessages,
   listWaivers,
   cancelBooking,
+  updateBooking,
+  deleteBooking,
   type WithMeta,
   type BookingInput,
 } from '@/lib/submissions';
@@ -255,6 +257,33 @@ const Admin = () => {
   const [view, setView] = useState<'submissions' | 'content'>('submissions');
   const qc = useQueryClient();
   const [refundingId, setRefundingId] = useState<string | null>(null);
+  const [editingBooking, setEditingBooking] = useState<any>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const handleDelete = async (booking: any) => {
+    if (!window.confirm(`Are you sure you want to permanently delete booking ${booking.bookingId}?`)) return;
+    setDeletingId(booking.id);
+    try {
+      await deleteBooking(booking.id);
+      qc.invalidateQueries({ queryKey: ['admin-bookings'] });
+      toast.success(`Booking ${booking.bookingId} deleted.`);
+    } catch (e: any) {
+      toast.error(e.message || "Failed to delete booking");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const handleStatusUpdate = async (booking: any, newStatus: string) => {
+    try {
+      await updateBooking(booking.id, { paymentStatus: newStatus as any });
+      qc.invalidateQueries({ queryKey: ['admin-bookings'] });
+      toast.success(`Booking ${booking.bookingId} status updated to ${newStatus}.`);
+    } catch (e: any) {
+      toast.error(e.message || "Failed to update status");
+    }
+  };
+
 
   useEffect(() => onAuthStateChanged(auth, (u) => {
     setUser(u);
@@ -363,7 +392,8 @@ const Admin = () => {
                     "px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap",
                     r.paymentStatus === 'SUCCESS' ? "bg-green-500/20 text-green-500 border border-green-500/30" : 
                     r.paymentStatus === 'FAILED' ? "bg-destructive/20 text-destructive border border-destructive/30" :
-                    r.paymentStatus === 'CANCELLED_REFUNDED' ? "bg-amber-500/20 text-amber-500 border border-amber-500/30" :
+                    r.paymentStatus === 'CANCELLED_REFUNDED' ? "bg-amber-500/20 text-amber-500 border border-amber-500/30" : 
+                    r.paymentStatus === 'COMPLETED' ? "bg-primary/20 text-primary border border-primary/30" :
                     "bg-muted text-muted-foreground border border-border"
                   )}>
                     {r.paymentStatus === 'CANCELLED_REFUNDED' ? 'REFUNDED' : r.paymentStatus || 'PENDING'}
@@ -427,6 +457,64 @@ const Admin = () => {
             />
           </TabsContent>
           </Tabs>
+        )}
+        {editingBooking && (
+          <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="glass-premium p-6 rounded-3xl max-w-md w-full border border-border/40 space-y-4">
+              <h2 className="text-xl font-bold">Edit Booking {editingBooking.bookingId}</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-xs text-muted-foreground uppercase tracking-wider block mb-1">Date</label>
+                  <input 
+                    type="date" 
+                    className="w-full bg-card/40 border border-border/40 rounded-xl px-4 py-2 outline-none"
+                    value={editingBooking.date}
+                    onChange={e => setEditingBooking({...editingBooking, date: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-muted-foreground uppercase tracking-wider block mb-1">Time</label>
+                  <input 
+                    type="time" 
+                    className="w-full bg-card/40 border border-border/40 rounded-xl px-4 py-2 outline-none"
+                    value={editingBooking.time}
+                    onChange={e => setEditingBooking({...editingBooking, time: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-muted-foreground uppercase tracking-wider block mb-1">Status</label>
+                  <select
+                    className="w-full bg-card/40 border border-border/40 rounded-xl px-4 py-2 outline-none"
+                    value={editingBooking.paymentStatus}
+                    onChange={e => setEditingBooking({...editingBooking, paymentStatus: e.target.value})}
+                  >
+                    <option value="PENDING">PENDING</option>
+                    <option value="SUCCESS">SUCCESS</option>
+                    <option value="FAILED">FAILED</option>
+                    <option value="COMPLETED">COMPLETED</option>
+                    <option value="CANCELLED_REFUNDED">REFUNDED</option>
+                  </select>
+                </div>
+              </div>
+              <div className="flex gap-3 justify-end pt-4">
+                <PremiumButton variant="ghost" onClick={() => setEditingBooking(null)}>Cancel</PremiumButton>
+                <PremiumButton onClick={async () => {
+                  try {
+                    await updateBooking(editingBooking.id, {
+                      date: editingBooking.date,
+                      time: editingBooking.time,
+                      paymentStatus: editingBooking.paymentStatus
+                    });
+                    qc.invalidateQueries({ queryKey: ['admin-bookings'] });
+                    toast.success('Booking updated!');
+                    setEditingBooking(null);
+                  } catch (e: any) {
+                    toast.error(e.message || 'Failed to update');
+                  }
+                }}>Save Changes</PremiumButton>
+              </div>
+            </div>
+          </div>
         )}
       </main>
     </div>

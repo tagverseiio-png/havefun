@@ -15,6 +15,7 @@ import {
   serverTimestamp,
   setDoc,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -159,4 +160,14 @@ export const listWaivers = () => listByCreatedAt<WaiverInput & WithMeta>('waiver
 export const cancelBooking = async (id: string) => {
   const docRef = doc(db, 'bookings', id);
   await updateDoc(docRef, { paymentStatus: 'CANCELLED_REFUNDED' });
+};
+
+export const updateBooking = async (id: string, data: Partial<BookingInput>) => {
+  const docRef = doc(db, 'bookings', id);
+  await updateDoc(docRef, data);
+};
+
+export const deleteBooking = async (id: string) => {
+  const docRef = doc(db, 'bookings', id);
+  await deleteDoc(docRef);
 };
