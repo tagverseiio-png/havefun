@@ -95,7 +95,7 @@ const Cafe = () => {
                                     whileHover={{ scale: 0.98, rotate: -1 }}
                                     className="rounded-[2.5rem] overflow-hidden aspect-[4/5] shadow-2xl relative group"
                                 >
-                                    <img src={img(0)} alt="Cafe Drink" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
+                                    <img src={img(0)} alt="Cafe Drink" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
                                     <div className="absolute inset-0 bg-primary/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                         <div className="bg-white/10 backdrop-blur-md p-4 rounded-full border border-white/20">
                                             <Play className="fill-white text-white ml-1" />
@@ -106,7 +106,7 @@ const Cafe = () => {
                                     whileHover={{ scale: 0.98, rotate: 1 }}
                                     className="rounded-[2.5rem] overflow-hidden aspect-square shadow-2xl group"
                                 >
-                                    <img src={img(1)} alt="Cafe Food" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
+                                    <img src={img(1)} alt="Cafe Food" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
                                 </motion.div>
                             </div>
                             <div className="space-y-6">
@@ -114,13 +114,13 @@ const Cafe = () => {
                                     whileHover={{ scale: 0.98, rotate: 1 }}
                                     className="rounded-[2.5rem] overflow-hidden aspect-square shadow-2xl group"
                                 >
-                                    <img src={img(2)} alt="Cafe Burger" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
+                                    <img src={img(2)} alt="Cafe Burger" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
                                 </motion.div>
                                 <motion.div
                                     whileHover={{ scale: 0.98, rotate: -1 }}
                                     className="rounded-[2.5rem] overflow-hidden aspect-[4/5] shadow-2xl group"
                                 >
-                                    <img src={img(3)} alt="Cafe Seating" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
+                                    <img src={img(3)} alt="Cafe Seating" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
                                 </motion.div>
                             </div>
                         </motion.div>

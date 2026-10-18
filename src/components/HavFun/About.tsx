@@ -83,6 +83,8 @@ const About = () => {
                             <img
                                 src={site?.aboutImage}
                                 alt="HavFun Park Action"
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-[2s] group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-overlay" />

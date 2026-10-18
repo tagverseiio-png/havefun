@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Instagram } from 'lucide-react';
 import PremiumButton from '@/components/ui/PremiumButton';
@@ -12,6 +13,42 @@ const LOCAL_VIDEOS = [
     { src: vid2, views: "10.8K" },
     { src: vid3, views: "9.4K" }
 ];
+
+function LazyVideo({ src, className }: { src: string; className?: string }) {
+    const [shouldLoad, setShouldLoad] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        const el = videoRef.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setShouldLoad(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: '300px' }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <video
+            ref={videoRef}
+            src={shouldLoad ? src : undefined}
+            className={className}
+            autoPlay={shouldLoad}
+            muted
+            loop
+            playsInline
+            preload="none"
+        />
+    );
+}
 
 const Testimonials = () => {
     return (
@@ -69,13 +106,9 @@ const Testimonials = () => {
                                     transition={{ delay: idx * 0.2 }}
                                     className="group relative h-[550px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-premium bg-black"
                                 >
-                                    <video 
+                                    <LazyVideo 
                                         src={video.src} 
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                                        autoPlay 
-                                        muted 
-                                        loop 
-                                        playsInline
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
                                     

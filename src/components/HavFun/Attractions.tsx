@@ -60,6 +60,8 @@ const Attractions = () => {
                                 <img
                                     src={attraction.image}
                                     alt={attraction.title}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110 brightness-90 group-hover:brightness-100"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

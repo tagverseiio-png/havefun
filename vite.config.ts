@@ -14,4 +14,18 @@ export default defineConfig(() => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: "esnext",
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router-dom"],
+          firebase: ["firebase/app", "firebase/auth", "firebase/firestore"],
+          motion: ["framer-motion"],
+          query: ["@tanstack/react-query"],
+        },
+      },
+    },
+  },
 }));
