@@ -391,7 +391,7 @@ function Section<T extends {
           </div>
 
           {/* Date Filter & Search Box */}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
             <div className="relative flex-1 sm:w-64">
               <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <input
@@ -399,35 +399,37 @@ function Section<T extends {
                 placeholder="Search name, phone, email, ID..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-background border border-border/40 rounded-xl pl-9 pr-3 py-1.5 text-xs outline-none focus:border-primary transition-colors"
+                className="w-full bg-background border border-border/40 rounded-xl pl-9 pr-3 py-2 sm:py-1.5 text-xs outline-none focus:border-primary transition-colors"
               />
             </div>
 
-            <Popover>
-              <PopoverTrigger asChild>
-                <PremiumButton variant="secondary" className="gap-2 h-9 px-3 shrink-0 text-xs">
-                  <CalendarIcon className="w-3.5 h-3.5" /> 
-                  {filterDate ? format(filterDate, 'PPP') : 'Filter Date'}
-                </PremiumButton>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="end">
-                <Calendar
-                  mode="single"
-                  selected={filterDate}
-                  onSelect={setFilterDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <div className="flex items-center gap-2">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <PremiumButton variant="secondary" className="gap-2 h-9 px-3 shrink-0 text-xs flex-1 sm:flex-initial">
+                    <CalendarIcon className="w-3.5 h-3.5" /> 
+                    {filterDate ? format(filterDate, 'PPP') : 'Filter Date'}
+                  </PremiumButton>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="end">
+                  <Calendar
+                    mode="single"
+                    selected={filterDate}
+                    onSelect={setFilterDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
 
-            {(filterDate || searchQuery) && (
-              <button 
-                onClick={() => { setFilterDate(undefined); setSearchQuery(''); }} 
-                className="text-xs text-muted-foreground hover:text-foreground underline shrink-0"
-              >
-                Reset
-              </button>
-            )}
+              {(filterDate || searchQuery) && (
+                <button 
+                  onClick={() => { setFilterDate(undefined); setSearchQuery(''); }} 
+                  className="text-xs text-muted-foreground hover:text-foreground underline shrink-0 px-2 py-1"
+                >
+                  Reset
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}

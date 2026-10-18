@@ -309,29 +309,29 @@ const Waiver = () => {
                 <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-background/80" />
             </div>
 
-            <main className="relative max-w-7xl mx-auto px-4 md:px-6 py-20 min-h-screen flex flex-col z-10">
+            <main className="relative max-w-7xl mx-auto px-4 md:px-6 py-12 sm:py-20 min-h-screen flex flex-col z-10">
                 {/* Header */}
-                <header className="mb-12 md:mb-20 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <header className="mb-8 sm:mb-12 md:mb-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-4"
+                        className="flex items-center gap-3 sm:gap-4"
                     >
-                        <div className="w-14 h-14 bg-gradient-neon rounded-2xl flex items-center justify-center text-primary-foreground shadow-neon rotate-3">
-                            <span className="text-2xl font-serif font-bold">H</span>
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-neon rounded-2xl flex items-center justify-center text-primary-foreground shadow-neon rotate-3 shrink-0">
+                            <span className="text-xl sm:text-2xl font-serif font-bold">H</span>
                         </div>
                         <div>
-                            <h2 className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground font-bold mb-1">HavFun Trampoline Park</h2>
-                            <p className="text-sm font-serif italic text-primary">The Eternal Waiver</p>
+                            <h2 className="text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-muted-foreground font-bold mb-0.5 sm:mb-1">HavFun Trampoline Park</h2>
+                            <p className="text-xs sm:text-sm font-serif italic text-primary">The Eternal Waiver</p>
                         </div>
                     </motion.div>
 
-                    <div className="flex flex-col items-end">
-                        <div className="flex gap-2 mb-2">
+                    <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border/30">
+                        <div className="flex gap-1.5 sm:gap-2 mb-0 sm:mb-2">
                             {SECTIONS.map((_, idx) => (
                                 <motion.div
                                     key={idx}
-                                    className={`h-1 w-8 rounded-full transition-all duration-700 ${idx <= step ? 'bg-gradient-neon' : 'bg-muted'
+                                    className={`h-1 w-6 sm:w-8 rounded-full transition-all duration-700 ${idx <= step ? 'bg-gradient-neon' : 'bg-muted'
                                         }`}
                                     initial={{ scaleX: 0 }}
                                     animate={{ scaleX: 1 }}
@@ -339,7 +339,7 @@ const Waiver = () => {
                                 />
                             ))}
                         </div>
-                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Step {step + 1} of 5</p>
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Step {step + 1} of 5</p>
                     </div>
                 </header>
 

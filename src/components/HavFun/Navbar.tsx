@@ -154,57 +154,76 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Nav Dropdown */}
+        {/* Mobile Nav Dropdown & Backdrop */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-2 p-4 rounded-2xl glass-premium border border-border/40 backdrop-blur-2xl shadow-2xl space-y-3">
-            <nav className="flex flex-col gap-2 text-sm font-medium">
-              <Link 
-                to="/" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-card/40 transition-colors"
-              >
-                Home
-              </Link>
-              <a 
-                href="/#attractions" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-card/40 transition-colors"
-              >
-                Attractions
-              </a>
-              <a 
-                href="/#pricing" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-card/40 transition-colors"
-              >
-                Pricing
-              </a>
-              <Link 
-                to="/waiver" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-card/40 transition-colors"
-              >
-                Sign Waiver
-              </Link>
-              <Link 
-                to="/booking" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl text-primary font-bold hover:bg-primary/10 transition-colors"
-              >
-                Book Tickets
-              </Link>
-              {user && (
+          <>
+            {/* Backdrop overlay to close menu on outside tap */}
+            <div 
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden animate-fade-in"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            
+            <div className="relative z-50 md:hidden mt-2 p-4 rounded-2xl glass-premium border border-border/40 backdrop-blur-2xl shadow-2xl space-y-3 animate-scale-in">
+              <nav className="flex flex-col gap-2 text-sm font-medium">
                 <Link 
-                  to="/profile" 
+                  to="/" 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-xl text-foreground font-semibold flex items-center gap-2 hover:bg-card/40 transition-colors"
+                  className="px-3 py-2.5 rounded-xl hover:bg-card/40 transition-colors"
                 >
-                  <Ticket className="w-4 h-4 text-primary" />
-                  My Bookings & Profile
+                  Home
                 </Link>
-              )}
-            </nav>
-          </div>
+                <a 
+                  href="/#attractions" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-xl hover:bg-card/40 transition-colors"
+                >
+                  Attractions
+                </a>
+                <a 
+                  href="/#pricing" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-xl hover:bg-card/40 transition-colors"
+                >
+                  Pricing
+                </a>
+                <Link 
+                  to="/waiver" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-xl hover:bg-card/40 transition-colors"
+                >
+                  Sign Waiver
+                </Link>
+                <Link 
+                  to="/booking" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-xl text-primary font-bold hover:bg-primary/10 transition-colors flex items-center justify-between"
+                >
+                  <span>Book Tickets</span>
+                  <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-extrabold">Instant</span>
+                </Link>
+                {user && (
+                  <Link 
+                    to="/profile" 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-3 py-2.5 rounded-xl text-foreground font-semibold flex items-center gap-2 hover:bg-card/40 transition-colors"
+                  >
+                    <Ticket className="w-4 h-4 text-primary" />
+                    My Bookings & Profile
+                  </Link>
+                )}
+                {user && isAdminEmail(user.email) && (
+                  <Link 
+                    to="/admin" 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-3 py-2.5 rounded-xl text-amber-400 font-semibold flex items-center gap-2 hover:bg-card/40 transition-colors"
+                  >
+                    <Shield className="w-4 h-4 text-amber-400" />
+                    Admin Dashboard
+                  </Link>
+                )}
+              </nav>
+            </div>
+          </>
         )}
       </div>
     </header>

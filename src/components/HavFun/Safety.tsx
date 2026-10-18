@@ -40,7 +40,7 @@ const Safety = () => {
                     </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {safetyFeatures.map((feature, idx) => (
                         <motion.div
                             key={feature.id}
@@ -53,19 +53,19 @@ const Safety = () => {
                                 rotateY: 10,
                                 transition: { duration: 0.4 }
                             }}
-                            className="bg-card/40 backdrop-blur-xl p-10 rounded-[2.5rem] border border-white/5 hover:border-primary/40 transition-all group text-center perspective-1000"
+                            className="bg-card/40 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-3xl md:rounded-[2.5rem] border border-white/5 hover:border-primary/40 transition-all group text-center perspective-1000"
                         >
                             <motion.div
                                 initial={{ scale: 0.5, opacity: 0 }}
                                 whileInView={{ scale: 1, opacity: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: idx * 0.1 + 0.3 }}
-                                className="mb-8 mx-auto p-4 rounded-3xl bg-white/5 border border-white/10 w-28 h-28 flex items-center justify-center group-hover:shadow-neon transition-all duration-500 overflow-hidden ring-1 ring-primary/0 group-hover:ring-primary/40"
+                                className="mb-6 sm:mb-8 mx-auto p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center group-hover:shadow-neon transition-all duration-500 overflow-hidden ring-1 ring-primary/0 group-hover:ring-primary/40"
                             >
                                 <img src={feature.icon} alt={feature.title} className="w-full h-full object-contain group-hover:scale-125 transition-transform duration-500" />
                             </motion.div>
-                            <h3 className="text-2xl font-bold mb-4 tracking-tight group-hover:text-primary transition-colors">{feature.title}</h3>
-                            <p className="text-muted-foreground text-base leading-relaxed font-light">
+                            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 tracking-tight group-hover:text-primary transition-colors">{feature.title}</h3>
+                            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed font-light">
                                 {feature.description}
                             </p>
                         </motion.div>

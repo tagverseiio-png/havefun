@@ -84,7 +84,7 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground relative overflow-hidden">
       {/* Background decorations */}
-      <div className="fixed inset-0 pointer-events-none">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/15 blur-[140px] rounded-full" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-secondary/15 blur-[140px] rounded-full" />
       </div>
@@ -92,30 +92,30 @@ const Profile = () => {
       {/* Global Navbar */}
       <Navbar />
 
-      <main className="relative z-10 container max-w-6xl mx-auto px-4 pt-28 pb-20">
+      <main className="relative z-10 container max-w-6xl mx-auto px-3 sm:px-4 pt-24 sm:pt-28 pb-16 sm:pb-20">
         {/* Not Logged In View */}
         {!authLoading && !user && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-md mx-auto my-12 p-8 rounded-3xl glass-premium border border-border/40 text-center space-y-6 shadow-2xl backdrop-blur-2xl"
+            className="max-w-md mx-auto my-8 sm:my-12 p-6 sm:p-8 rounded-3xl glass-premium border border-border/40 text-center space-y-6 shadow-2xl backdrop-blur-2xl"
           >
-            <div className="w-16 h-16 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary mx-auto shadow-neon">
-              <Ticket className="w-8 h-8" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary mx-auto shadow-neon">
+              <Ticket className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
 
             <div className="space-y-2">
-              <h1 className="text-2xl font-bold tracking-tight">Customer Portal</h1>
-              <p className="text-sm text-muted-foreground">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Customer Portal</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Sign in with your Google account to view your bookings, digital entry passes, and ticket history.
               </p>
             </div>
 
             <button
               onClick={() => signInWithGoogle()}
-              className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-xl bg-card hover:bg-card/80 border border-border/80 hover:border-primary/50 text-foreground font-semibold text-sm transition-all shadow-md group"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-card hover:bg-card/80 border border-border/80 hover:border-primary/50 text-foreground font-semibold text-xs sm:text-sm transition-all shadow-md group"
             >
-              <svg className="w-5 h-5 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:scale-110 shrink-0" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -137,7 +137,7 @@ const Profile = () => {
             </button>
 
             <div className="pt-4 border-t border-border/30 text-xs text-muted-foreground flex items-center justify-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-primary" />
+              <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
               <span>Instant access • No password needed</span>
             </div>
           </motion.div>
@@ -145,71 +145,71 @@ const Profile = () => {
 
         {/* User Logged In View */}
         {user && (
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* User Profile Header Card */}
             <motion.div 
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-6 md:p-8 rounded-3xl glass-premium border border-border/40 shadow-2xl backdrop-blur-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+              className="p-5 sm:p-6 md:p-8 rounded-3xl glass-premium border border-border/40 shadow-2xl backdrop-blur-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3.5 sm:gap-4">
                 {user.photoURL ? (
                   <img
                     src={user.photoURL}
                     alt={user.displayName || 'Profile'}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-primary/50 shadow-neon"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-primary/50 shadow-neon shrink-0"
                   />
                 ) : (
-                  <div className="w-16 h-16 rounded-full bg-primary/20 text-primary border-2 border-primary/40 flex items-center justify-center font-bold text-2xl shadow-neon">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/20 text-primary border-2 border-primary/40 flex items-center justify-center font-bold text-xl sm:text-2xl shadow-neon shrink-0">
                     {user.displayName?.charAt(0) || user.email?.charAt(0) || 'U'}
                   </div>
                 )}
-                <div className="space-y-1">
+                <div className="space-y-0.5 sm:space-y-1">
                   <div className="flex items-center gap-2">
-                    <h1 className="text-xl md:text-2xl font-black text-foreground">
+                    <h1 className="text-lg sm:text-xl md:text-2xl font-black text-foreground">
                       {user.displayName || 'HavFun Guest'}
                     </h1>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/20 text-primary border border-primary/30 uppercase tracking-wider">
+                    <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-primary/20 text-primary border border-primary/30 uppercase tracking-wider">
                       Customer
                     </span>
                   </div>
-                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground truncate max-w-[200px] sm:max-w-none">{user.email}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 w-full md:w-auto">
                 <Link to="/booking" className="flex-1 md:flex-initial">
-                  <PremiumButton className="w-full h-11 px-6 text-sm font-semibold">
-                    <Sparkles className="w-4 h-4 mr-2" /> Book New Session
+                  <PremiumButton className="w-full h-10 sm:h-11 px-4 sm:px-6 text-xs sm:text-sm font-semibold">
+                    <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2" /> Book New Session
                   </PremiumButton>
                 </Link>
                 <button
                   onClick={() => signOutUser()}
                   title="Sign Out"
-                  className="p-2.5 rounded-xl bg-card/60 hover:bg-card border border-border/60 hover:border-destructive/40 text-muted-foreground hover:text-destructive transition-all"
+                  className="p-2.5 rounded-xl bg-card/60 hover:bg-card border border-border/60 hover:border-destructive/40 text-muted-foreground hover:text-destructive transition-all shrink-0"
                 >
-                  <LogOut className="w-5 h-5" />
+                  <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
               </div>
             </motion.div>
 
             {/* Metrics Bar */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="p-4 rounded-2xl glass-premium border border-border/30 backdrop-blur-xl">
-                <p className="text-xs text-muted-foreground font-medium">Total Bookings</p>
-                <p className="text-2xl font-black text-foreground mt-1">{bookings.length}</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+              <div className="p-3.5 sm:p-4 rounded-2xl glass-premium border border-border/30 backdrop-blur-xl">
+                <p className="text-[11px] sm:text-xs text-muted-foreground font-medium">Total Bookings</p>
+                <p className="text-xl sm:text-2xl font-black text-foreground mt-1">{bookings.length}</p>
               </div>
-              <div className="p-4 rounded-2xl glass-premium border border-green-500/20 bg-green-500/5 backdrop-blur-xl">
-                <p className="text-xs text-green-400 font-medium">Confirmed Passes</p>
-                <p className="text-2xl font-black text-green-400 mt-1">{confirmedCount}</p>
+              <div className="p-3.5 sm:p-4 rounded-2xl glass-premium border border-green-500/20 bg-green-500/5 backdrop-blur-xl">
+                <p className="text-[11px] sm:text-xs text-green-400 font-medium">Confirmed Passes</p>
+                <p className="text-xl sm:text-2xl font-black text-green-400 mt-1">{confirmedCount}</p>
               </div>
-              <div className="p-4 rounded-2xl glass-premium border border-amber-500/20 bg-amber-500/5 backdrop-blur-xl">
-                <p className="text-xs text-amber-400 font-medium">Pending / Incomplete</p>
-                <p className="text-2xl font-black text-amber-400 mt-1">{pendingCount}</p>
+              <div className="p-3.5 sm:p-4 rounded-2xl glass-premium border border-amber-500/20 bg-amber-500/5 backdrop-blur-xl">
+                <p className="text-[11px] sm:text-xs text-amber-400 font-medium">Pending / Dropped</p>
+                <p className="text-xl sm:text-2xl font-black text-amber-400 mt-1">{pendingCount}</p>
               </div>
-              <div className="p-4 rounded-2xl glass-premium border border-primary/20 bg-primary/5 backdrop-blur-xl">
-                <p className="text-xs text-primary font-medium">Total Jumpers Hosted</p>
-                <p className="text-2xl font-black text-primary mt-1">{totalJumpers}</p>
+              <div className="p-3.5 sm:p-4 rounded-2xl glass-premium border border-primary/20 bg-primary/5 backdrop-blur-xl">
+                <p className="text-[11px] sm:text-xs text-primary font-medium">Total Jumpers</p>
+                <p className="text-xl sm:text-2xl font-black text-primary mt-1">{totalJumpers}</p>
               </div>
             </div>
 
@@ -440,17 +440,17 @@ const Profile = () => {
       {/* Ticket Pass Modal */}
       <AnimatePresence>
         {selectedTicket && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-md rounded-3xl glass-premium border border-primary/40 bg-card p-6 md:p-8 space-y-6 shadow-2xl relative text-foreground"
+              className="w-full max-w-md max-h-[92vh] overflow-y-auto rounded-3xl glass-premium border border-primary/40 bg-card p-5 sm:p-6 md:p-8 space-y-5 sm:space-y-6 shadow-2xl relative text-foreground my-auto"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedTicket(null)}
-                className="absolute top-5 right-5 p-2 rounded-full hover:bg-card/80 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full hover:bg-card/80 text-muted-foreground hover:text-foreground transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>

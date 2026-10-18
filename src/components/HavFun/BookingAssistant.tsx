@@ -378,11 +378,11 @@ const BookingAssistant = () => {
   );
 
   const renderDurationSelection = () => (
-    <div className="space-y-6">
-      <h3 className="text-sm font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
+    <div className="space-y-4 sm:space-y-6">
+      <h3 className="text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
         <Clock className="w-4 h-4" /> Select Duration
       </h3>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4">
         {durations.map((d) => (
           <motion.button
             key={d.value}
@@ -390,17 +390,17 @@ const BookingAssistant = () => {
             whileTap={{ scale: 0.98 }}
             onClick={() => setDuration(d.value)}
             className={cn(
-              "p-6 rounded-3xl border-2 transition-all text-center group",
+              "p-4 sm:p-6 rounded-2xl sm:rounded-3xl border-2 transition-all text-center group",
               duration === d.value 
                 ? "border-primary bg-primary/10 text-primary shadow-neon" 
                 : "border-border/40 hover:border-primary/30 bg-card/40"
             )}
           >
             <span className={cn(
-              "text-xl font-bold block mb-1",
+              "text-base sm:text-xl font-bold block mb-1",
               duration === d.value ? "text-primary" : "text-foreground"
             )}>{d.label}</span>
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-primary/70 transition-colors">
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-muted-foreground group-hover:text-primary/70 transition-colors">
               ₹{d.price} / person
             </span>
           </motion.button>
@@ -410,8 +410,8 @@ const BookingAssistant = () => {
   );
 
   const renderDateSelection = () => (
-    <div className="space-y-6">
-      <h3 className="text-sm font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
+    <div className="space-y-4 sm:space-y-6">
+      <h3 className="text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
         <CalendarIcon className="w-4 h-4" /> Select Date
       </h3>
       <Popover>
@@ -419,37 +419,37 @@ const BookingAssistant = () => {
           <motion.button 
             whileHover={{ scale: 1.01 }}
             className={cn(
-              "w-full p-6 rounded-3xl border-2 transition-all text-left flex items-center justify-between group",
+              "w-full p-4 sm:p-6 rounded-2xl sm:rounded-3xl border-2 transition-all text-left flex items-center justify-between group",
               date ? "border-primary bg-primary/10" : "border-border/40 bg-card/40"
             )}
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <div className={cn(
-                "p-3 rounded-2xl transition-colors",
+                "p-2.5 sm:p-3 rounded-xl sm:rounded-2xl transition-colors",
                 date ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
               )}>
-                <CalendarIcon className="w-6 h-6" />
+                <CalendarIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div>
-                <span className="text-lg font-bold block">
+                <span className="text-base sm:text-lg font-bold block">
                   {date ? format(date, "PPP") : "Choose a Date"}
                 </span>
-                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-muted-foreground">
                   Available Tomorrow & Beyond
                 </span>
               </div>
             </div>
-            <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-all" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-primary transition-all shrink-0" />
           </motion.button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 rounded-[2rem] border-primary/20 bg-card/90 backdrop-blur-xl" align="start">
+        <PopoverContent className="w-auto p-0 rounded-2xl sm:rounded-[2rem] border-primary/20 bg-card/95 backdrop-blur-2xl max-w-[calc(100vw-32px)]" align="center">
           <Calendar
             mode="single"
             selected={date}
             onSelect={setDate}
             disabled={(d) => isBefore(d, startOfDay(new Date()))}
             initialFocus
-            className="p-4"
+            className="p-3 sm:p-4"
           />
         </PopoverContent>
       </Popover>
@@ -484,12 +484,12 @@ const BookingAssistant = () => {
     }
 
     return (
-      <div className="space-y-6">
-        <h3 className="text-sm font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
+      <div className="space-y-4 sm:space-y-6">
+        <h3 className="text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-primary flex items-center gap-2">
           <Clock className="w-4 h-4" /> Select Time
         </h3>
         
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3">
           {slots.map((slot) => {
             const isFull = slot.booked >= slot.capacity;
             const isSelected = selectedTime === slot.time;
@@ -498,11 +498,11 @@ const BookingAssistant = () => {
               <motion.button
                 key={slot.time}
                 disabled={isFull}
-                whileHover={!isFull ? { scale: 1.05 } : {}}
-                whileTap={!isFull ? { scale: 0.95 } : {}}
+                whileHover={!isFull ? { scale: 1.04 } : {}}
+                whileTap={!isFull ? { scale: 0.96 } : {}}
                 onClick={() => setSelectedTime(slot.time)}
                 className={cn(
-                  "p-3 rounded-2xl border transition-all text-center relative overflow-hidden",
+                  "p-2 sm:p-3 rounded-xl sm:rounded-2xl border transition-all text-center relative overflow-hidden",
                   isSelected 
                     ? "border-primary bg-primary text-primary-foreground shadow-neon" 
                     : isFull 
@@ -510,10 +510,10 @@ const BookingAssistant = () => {
                       : "border-border/40 hover:border-primary/40 bg-card/40"
                 )}
               >
-                <span className="text-sm font-bold block">{slot.time}</span>
+                <span className="text-xs sm:text-sm font-bold block">{slot.time}</span>
                 <span className={cn(
-                  "text-[8px] uppercase tracking-tighter opacity-70",
-                  isSelected ? "text-primary-foreground" : isFull ? "text-destructive" : "text-muted-foreground"
+                  "text-[8px] uppercase tracking-tighter opacity-80 block truncate",
+                  isSelected ? "text-primary-foreground font-semibold" : isFull ? "text-destructive" : "text-muted-foreground"
                 )}>
                   {isFull ? "Full" : `${slot.capacity - slot.booked} spots`}
                 </span>
@@ -579,8 +579,8 @@ const BookingAssistant = () => {
   }
 
   return (
-    <div className="max-w-xl mx-auto space-y-10">
-      <div className="text-center space-y-4">
+    <div className="w-full max-w-xl mx-auto space-y-8 sm:space-y-10">
+      <div className="text-center space-y-3 sm:space-y-4">
         <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -588,11 +588,11 @@ const BookingAssistant = () => {
         >
           <Sparkles className="w-3 h-3" /> Smart Assistant
         </motion.div>
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Reserve Your <span className="text-primary italic">Flight</span></h2>
-        <p className="text-muted-foreground text-sm">Quick, clear, and secure booking experience.</p>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">Reserve Your <span className="text-primary italic">Flight</span></h2>
+        <p className="text-muted-foreground text-xs sm:text-sm">Quick, clear, and secure booking experience.</p>
       </div>
 
-      <div className="glass-premium p-8 md:p-10 rounded-[2.5rem] border border-border/40 space-y-10">
+      <div className="glass-premium p-5 sm:p-8 md:p-10 rounded-3xl md:rounded-[2.5rem] border border-border/40 space-y-6 sm:space-y-10">
         
         {renderUserDetails()}
         
@@ -605,7 +605,7 @@ const BookingAssistant = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="space-y-10"
+              className="space-y-6 sm:space-y-10"
             >
               <div className="h-px bg-gradient-to-r from-transparent via-border/40 to-transparent" />
               {renderDateSelection()}
@@ -619,7 +619,7 @@ const BookingAssistant = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="space-y-10"
+              className="space-y-6 sm:space-y-10"
             >
               <div className="h-px bg-gradient-to-r from-transparent via-border/40 to-transparent" />
               {renderTimeSelection()}
@@ -627,21 +627,21 @@ const BookingAssistant = () => {
           )}
         </AnimatePresence>
 
-        <div className="pt-4">
+        <div className="pt-2 sm:pt-4">
             <PremiumButton
-                className="w-full h-16 text-lg group"
+                className="w-full h-14 sm:h-16 text-base sm:text-lg group"
                 disabled={!isFormComplete || isSaving}
                 onClick={handleBooking}
             >
                 {isSaving ? 'Processing…' : (
                   <>
-                    <CreditCard className="w-5 h-5 mr-2" /> 
+                    <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> 
                     Pay ₹{totalAmount} & Book 
-                    <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1.5 sm:ml-2 group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
             </PremiumButton>
-            <p className="text-center text-[10px] text-muted-foreground mt-4 uppercase tracking-[0.2em]">
+            <p className="text-center text-[10px] text-muted-foreground mt-3 sm:mt-4 uppercase tracking-[0.2em]">
                 Secure Payment via Razorpay
             </p>
         </div>
