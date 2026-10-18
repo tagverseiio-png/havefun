@@ -16,6 +16,7 @@ import {
   setDoc,
   updateDoc,
   deleteDoc,
+  where,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -38,7 +39,9 @@ export interface BookingInput {
   amount: number;
   paymentId?: string;
   orderId?: string;
-  paymentStatus?: 'SUCCESS' | 'FAILED' | 'PENDING';
+  paymentStatus?: 'SUCCESS' | 'FAILED' | 'PENDING' | 'CANCELLED_REFUNDED' | 'COMPLETED';
+  userId?: string;
+  failureReason?: string;
 }
 
 export interface WaiverParticipant {
@@ -171,3 +174,61 @@ export const deleteBooking = async (id: string) => {
   const docRef = doc(db, 'bookings', id);
   await deleteDoc(docRef);
 };
+
+export const recordBookingAttempt = async (data: BookingInput): Promise<string> => {
+  const colRef = collection(db, 'bookings');
+  const docRef = await addDoc(colRef, {
+    ...data,
+    paymentStatus: data.paymentStatus || 'PENDING',
+    createdAt: serverTimestamp(),
+  });
+  return docRef.id;
+};
+
+export const updateBookingStatus = async (
+  id: string, 
+  status: BookingInput['paymentStatus'], 
+  details?: Partial<BookingInput>
+) => {
+  const docRef = doc(db, 'bookings', id);
+  await updateDoc(docRef, {
+    paymentStatus: status,
+    ...(details || {}),
+    updatedAt: serverTimestamp(),
+  });
+};
+
+export const listUserBookings = async (userId?: string, email?: string): Promise<WithMeta<BookingInput>[]> => {
+  if (!userId && !email) return [];
+  try {
+    const colRef = collection(db, 'bookings');
+    const q = userId 
+      ? query(colRef, where('userId', '==', userId))
+      : query(colRef, where('userEmail', '==', email));
+    
+    const snap = await getDocs(q);
+    const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as WithMeta<BookingInput>));
+    
+    // If user has both, merge any matching by email
+    if (userId && email) {
+      const emailQ = query(colRef, where('userEmail', '==', email));
+      const emailSnap = await getDocs(emailQ);
+      const emailList = emailSnap.docs.map(d => ({ id: d.id, ...d.data() } as WithMeta<BookingInput>));
+      const seen = new Set(list.map(b => b.id));
+      for (const item of emailList) {
+        if (!seen.has(item.id)) list.push(item);
+      }
+    }
+    
+    // Sort descending by date / createdAt
+    return list.sort((a, b) => {
+      const timeB = b.createdAt?.seconds || new Date(b.date + ' ' + (b.time || '00:00')).getTime() || 0;
+      const timeA = a.createdAt?.seconds || new Date(a.date + ' ' + (a.time || '00:00')).getTime() || 0;
+      return timeB - timeA;
+    });
+  } catch (err) {
+    console.error('Error fetching user bookings:', err);
+    return [];
+  }
+};
+
