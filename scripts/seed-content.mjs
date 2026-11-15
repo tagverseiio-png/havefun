@@ -7,7 +7,7 @@
 export const site = {
   name: 'HavFun Trampoline Park',
   tagline: 'Where Thrills, Laughter, and Memories Take Flight.',
-  address: 'First Floor, 173, Mount Poonamallee Rd, Mugalivakkam, Chennai, Tamil Nadu 600116',
+  address: 'MRTS Station, beside The, Subramaniam Colony, Bhuvaneshwari Nagar, Velachery, Chennai, Tamil Nadu 600042',
   phone: '7010180483',
   phoneE164: '+917010180483',
   email: 'havfuntrampolinepark@gmail.com',
@@ -15,7 +15,8 @@ export const site = {
   instagram: 'https://www.instagram.com/havfun_trampolinepark',
   website: 'https://havfuntrampolinepark.com',
   mapsEmbed:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15549.988267039014!2d80.1706935!3d13.0197595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5260d000632a69%3A0x6b4991264380eb0b!2sHavFun%20Trampoline%20Park!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin',
+    'https://maps.google.com/maps?q=MRTS+Station%2C+beside+The%2C+Subramaniam+Colony%2C+Bhuvaneshwari+Nagar%2C+Velachery%2C+Chennai%2C+Tamil+Nadu+600042&t=m&z=16&output=embed&iwloc=near',
+  mapsUrl: 'https://maps.app.goo.gl/7bWh37gNPDeQJeQD7',
   weightLimitKg: 100,
   razorpayLink: 'https://razorpay.me/@vvpsentertainmentandadventure',
 };

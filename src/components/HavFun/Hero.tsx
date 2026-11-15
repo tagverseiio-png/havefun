@@ -27,13 +27,11 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    {site?.logo && (
-                        <img
-                            src={site.logo}
-                            alt="HavFun Logo"
-                            className="h-28 sm:h-36 md:h-48 mx-auto mb-6 sm:mb-8 drop-shadow-neon"
-                        />
-                    )}
+                    <img
+                        src={site?.logo || "/logo.png"}
+                        alt="HavFun Logo"
+                        className="h-28 sm:h-36 md:h-48 mx-auto mb-6 sm:mb-8 drop-shadow-neon"
+                    />
 
                     <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-[1.1]">
                         Where Thrills, Laughter, <br className="hidden sm:inline" /> and Memories <span className="text-primary italic">Take Flight</span>.

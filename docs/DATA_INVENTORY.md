@@ -29,13 +29,13 @@ Source: `Contact.tsx`, `About.tsx`, `FAQ.tsx`
 | Field | Value |
 |-------|-------|
 | Business name | HavFun Trampoline Park |
-| Address | First Floor, 173, Mount Poonamallee Rd, Mugalivakkam, Chennai, Tamil Nadu 600116 |
+| Address | MRTS Station, beside The, Subramaniam Colony, Bhuvaneshwari Nagar, Velachery, Chennai, Tamil Nadu 600042 |
 | Phone | 7010180483 (`tel:+917010180483`) |
 | Email | havfuntrampolinepark@gmail.com |
 | Working hours | Monday–Sunday, 10 AM – 10 PM |
 | Instagram | https://www.instagram.com/havfun_trampolinepark |
 | Website | https://havfuntrampolinepark.com |
-| Google Maps | embedded iframe (place id `0x3a5260d000632a69:0x6b4991264380eb0b`) |
+| Google Maps | https://maps.app.goo.gl/7bWh37gNPDeQJeQD7 |
 | Weight limit | 100 kg |
 | Age note | Children below 6 have a designated zone |
 

@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock, Send, Loader2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, Loader2, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import PremiumButton from '@/components/ui/PremiumButton';
@@ -46,7 +46,22 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-lg font-bold mb-1">Our Location</h4>
-                                    <p className="text-muted-foreground">{site?.address}</p>
+                                    <a
+                                        href={site?.mapsUrl || "https://maps.app.goo.gl/7bWh37gNPDeQJeQD7"}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-muted-foreground hover:text-primary transition-colors block leading-relaxed"
+                                    >
+                                        {site?.address}
+                                    </a>
+                                    <a
+                                        href={site?.mapsUrl || "https://maps.app.goo.gl/7bWh37gNPDeQJeQD7"}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1.5 text-xs text-primary font-semibold mt-2 hover:underline"
+                                    >
+                                        Get Directions <ExternalLink className="w-3.5 h-3.5" />
+                                    </a>
                                 </div>
                             </div>
 

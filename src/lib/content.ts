@@ -17,12 +17,33 @@ export interface SiteSettings {
   instagram: string;
   website: string;
   mapsEmbed: string;
+  mapsUrl?: string;
   weightLimitKg: number;
   razorpayLink: string;
   logo: string;
   banner: string;
   aboutImage: string;
 }
+
+export const DEFAULT_SITE_SETTINGS: SiteSettings = {
+  name: 'HavFun Trampoline Park',
+  tagline: 'Where Thrills, Laughter, and Memories Take Flight.',
+  address: 'MRTS Station, beside The, Subramaniam Colony, Bhuvaneshwari Nagar, Velachery, Chennai, Tamil Nadu 600042',
+  phone: '7010180483',
+  phoneE164: '+917010180483',
+  email: 'havfuntrampolinepark@gmail.com',
+  hours: 'Monday – Sunday: 10AM – 10PM',
+  instagram: 'https://www.instagram.com/havfun_trampolinepark',
+  website: 'https://havfuntrampolinepark.com',
+  mapsEmbed:
+    'https://maps.google.com/maps?q=MRTS+Station%2C+beside+The%2C+Subramaniam+Colony%2C+Bhuvaneshwari+Nagar%2C+Velachery%2C+Chennai%2C+Tamil+Nadu+600042&t=m&z=16&output=embed&iwloc=near',
+  mapsUrl: 'https://maps.app.goo.gl/7bWh37gNPDeQJeQD7',
+  weightLimitKg: 100,
+  razorpayLink: 'https://razorpay.me/@vvpsentertainmentandadventure',
+  logo: '/logo.png',
+  banner: 'https://images.unsplash.com/photo-1518605368461-1eb5d4e116e0?q=80&w=1600&auto=format&fit=crop',
+  aboutImage: 'https://images.unsplash.com/photo-1551817958-c9aa14ffe524?q=80&w=1600&auto=format&fit=crop',
+};
 
 export interface PricingConfig {
   bookingLink: string;
@@ -50,11 +71,26 @@ async function getSettingsDoc<T>(id: string): Promise<T | null> {
   const snap = await getDoc(doc(db, 'settings', id));
   if (id === 'site') {
       const data = snap.exists() ? snap.data() : {};
+      const rawAddress = (data.address as string | undefined)?.trim();
+      const rawEmbed = (data.mapsEmbed as string | undefined)?.trim();
+
+      const address = (!rawAddress || rawAddress.includes('Mugalivakkam'))
+          ? DEFAULT_SITE_SETTINGS.address
+          : rawAddress;
+
+      const mapsEmbed = (!rawEmbed || rawEmbed.includes('Mugalivakkam') || rawEmbed.includes('0x3a5260d000632a69'))
+          ? DEFAULT_SITE_SETTINGS.mapsEmbed
+          : rawEmbed;
+
       return {
+          ...DEFAULT_SITE_SETTINGS,
           ...data,
-          logo: data.logo || 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=512&auto=format&fit=crop', // fallback logo
-          banner: data.banner || 'https://images.unsplash.com/photo-1518605368461-1eb5d4e116e0?q=80&w=1600&auto=format&fit=crop', // fallback banner
-          aboutImage: data.aboutImage || 'https://images.unsplash.com/photo-1551817958-c9aa14ffe524?q=80&w=1600&auto=format&fit=crop' // fallback about
+          address,
+          mapsEmbed,
+          mapsUrl: (data.mapsUrl as string | undefined) || DEFAULT_SITE_SETTINGS.mapsUrl,
+          logo: data.logo || DEFAULT_SITE_SETTINGS.logo,
+          banner: data.banner || DEFAULT_SITE_SETTINGS.banner,
+          aboutImage: data.aboutImage || DEFAULT_SITE_SETTINGS.aboutImage
       } as T;
   }
   return snap.exists() ? (snap.data() as T) : null;

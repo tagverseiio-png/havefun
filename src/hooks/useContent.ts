@@ -15,13 +15,19 @@ import {
   fetchSite,
   fetchWaiverImages,
   type PricingConfig,
+  DEFAULT_SITE_SETTINGS,
 } from '@/lib/content';
 import { PRICING_CONFIG } from '@/lib/pricing-config';
 
 const ONE_HOUR = 1000 * 60 * 60;
 
 export const useSite = () =>
-  useQuery({ queryKey: ['site'], queryFn: fetchSite, staleTime: ONE_HOUR });
+  useQuery({
+    queryKey: ['site'],
+    queryFn: fetchSite,
+    placeholderData: DEFAULT_SITE_SETTINGS,
+    staleTime: ONE_HOUR,
+  });
 
 export const usePricing = () =>
   useQuery<PricingConfig>({

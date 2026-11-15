@@ -29,17 +29,11 @@ const Navbar = () => {
           
           {/* Logo & Brand */}
           <Link to="/" className="flex items-center gap-3 group">
-            {site?.logo ? (
-              <img 
-                src={site.logo} 
-                alt="HavFun" 
-                className="h-9 w-auto object-contain transition-transform group-hover:scale-105" 
-              />
-            ) : (
-              <div className="w-9 h-9 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-black text-primary text-base">
-                H
-              </div>
-            )}
+            <img 
+              src={site?.logo || "/logo.png"} 
+              alt="HavFun" 
+              className="h-9 w-auto object-contain transition-transform group-hover:scale-105" 
+            />
             <span className="font-extrabold tracking-tight text-foreground text-base md:text-lg hidden sm:inline-block">
               Hav<span className="text-primary italic">Fun</span>
             </span>

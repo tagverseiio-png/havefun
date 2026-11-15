@@ -82,6 +82,7 @@ export const SiteEditor = () => {
       </div>
       <Text label="Address" value={s('address')} onChange={(v) => set('address', v)} textarea />
       <Text label="Google Maps embed URL" value={s('mapsEmbed')} onChange={(v) => set('mapsEmbed', v)} textarea />
+      <Text label="Google Maps direct share URL" value={s('mapsUrl')} onChange={(v) => set('mapsUrl', v)} />
       <div className="grid md:grid-cols-3 gap-4">
         <ImageField label="Logo" value={s('logo')} kind="icon" onChange={(v) => set('logo', v)} />
         <ImageField label="Hero banner" value={s('banner')} kind="photo" onChange={(v) => set('banner', v)} />
