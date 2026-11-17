@@ -7,7 +7,7 @@
 export const site = {
   name: 'HavFun Trampoline Park',
   tagline: 'Where Thrills, Laughter, and Memories Take Flight.',
-  address: 'MRTS Station, beside The, Subramaniam Colony, Bhuvaneshwari Nagar, Velachery, Chennai, Tamil Nadu 600042',
+  address: '2nd floor, Velachery Service Road, Karnival food Street, Kora, Velachery, Chennai, Tamil Nadu 600042',
   phone: '7010180483',
   phoneE164: '+917010180483',
   email: 'havfuntrampolinepark@gmail.com',
@@ -15,8 +15,8 @@ export const site = {
   instagram: 'https://www.instagram.com/havfun_trampolinepark',
   website: 'https://havfuntrampolinepark.com',
   mapsEmbed:
-    'https://maps.google.com/maps?q=MRTS+Station%2C+beside+The%2C+Subramaniam+Colony%2C+Bhuvaneshwari+Nagar%2C+Velachery%2C+Chennai%2C+Tamil+Nadu+600042&t=m&z=16&output=embed&iwloc=near',
-  mapsUrl: 'https://maps.app.goo.gl/7bWh37gNPDeQJeQD7',
+    'https://maps.google.com/maps?q=2nd+floor%2C+Velachery+Service+Road%2C+Karnival+food+Street%2C+Kora%2C+Velachery%2C+Chennai%2C+Tamil+Nadu+600042&t=m&z=16&output=embed&iwloc=near',
+  mapsUrl: 'https://maps.app.goo.gl/Yer8udFFQVCq5obz9',
   weightLimitKg: 100,
   razorpayLink: 'https://razorpay.me/@vvpsentertainmentandadventure',
 };
